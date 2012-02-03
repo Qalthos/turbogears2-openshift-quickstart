@@ -50,6 +50,24 @@ If you don't want to use the `openshift-quickstarter`, you can easily create a n
     git pull -s recursive -X theirs upstream master
     git push
 
+
+Importing an old application
+----------------------------
+
+If you have an existing TG2 application, you can import your existing code as a
+git submodule:
+
+::
+
+    ./import_old_project.sh
+    Enter project name [tg2app]:
+    Enter package name [tg2app]:
+    Enter git repository to use:
+
+    rhc-ctl-app -a <appname> -e add-mysql-5.1 -l your@email.com
+
+If any step of this fails for any reason, run the reset.sh command.
+
 Monitoring your logs
 --------------------
 
