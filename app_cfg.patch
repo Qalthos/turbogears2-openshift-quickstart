@@ -1,0 +1,33 @@
+--- ./wsgi/web_myst/adventure/config/app_cfg.py	2012-02-01 14:32:23.030112053 -0500
++++ app_cfg.py	2012-02-01 14:14:19.865980059 -0500
+@@ -15,3 +15,6 @@
+ 
++import os
++
+ from tg.configuration import AppConfig
++from pylons import config
+ 
+@@ -21,3 +24,22 @@
+ 
+-base_config = AppConfig()
++class OpenShiftConfig(AppConfig):
++
++    def after_init_config(self):
++        if os.environ.get('OPENSHIFT_APP_NAME'):
++            self.sa_auth.cookie_secret = os.environ['OPENSHIFT_APP_UUID']
++            config['cookie_secret'] = os.environ['OPENSHIFT_APP_UUID']
++            config['beaker.session.secret'] = os.environ['OPENSHIFT_APP_UUID']
++            config['cache_dir'] = os.environ['OPENSHIFT_DATA_DIR']
++            config['beaker.session.key'] = os.environ['OPENSHIFT_APP_NAME']
++            config['beaker.cache.data_dir'] = \
++                    os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'cache')
++            config['beaker.session.data_dir'] = \
++                    os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'sessions')
++            config['templating.mako.compiled_templates_dir'] = \
++                    os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'templates')
++            if os.environ.get('OPENSHIFT_DB_URL'):
++                config['sqlalchemy.url'] = \
++                    '%(OPENSHIFT_DB_URL)s%(OPENSHIFT_APP_NAME)s' % os.environ
++
++base_config = OpenShiftConfig()
+ base_config.renderers = []
