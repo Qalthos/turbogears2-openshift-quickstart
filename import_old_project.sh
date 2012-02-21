@@ -29,7 +29,7 @@ mv wsgi/tg2app/openshift.ini .
 rm -r wsgi/tg2app
 
 # Pull the existing repository as a submodule.
-git subtree add "wsgi/$proj" "$repo"
+git subtree add -P "wsgi/$proj" "$repo"
 mv openshift.ini wsgi/$proj/
 
 patch "wsgi/$proj/$pack/config/app_cfg.py" < app_cfg.patch
