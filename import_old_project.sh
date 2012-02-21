@@ -18,7 +18,7 @@ fi
 read -p "Enter git repository to use: " -e repo
 
 # Modify important files.
-sed -e -e "s|wsgi/tg2app|wsgi/$proj|g" "s|tg2app/public|$pack/public|g" \
+sed -e "s|wsgi/tg2app|wsgi/$proj|g" "s|tg2app/public|$pack/public|g" \
     -i .openshift/action_hooks/build
 sed -e "s|wsgi/tg2app|wsgi/$proj|g" -i .openshift/action_hooks/deploy
 sed -e "s|tg2app|$proj|g" -i wsgi/application
