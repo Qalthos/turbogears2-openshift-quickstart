@@ -21,6 +21,7 @@ read -p "Enter git repository to use: " -e repo
 sed -e "s|tg2app/public|$proj/public|g" -e "s|wsgi/tg2app|wsgi/$pack|g" \
     -i .openshift/action_hooks/build
 sed -e "s|wsgi/tg2app|wsgi/$pack|g" -i .openshift/action_hooks/deploy
+sed -e "s|tg2app|$proj|g" -i .gitignore
 sed -e "s|tg2app|$proj|g" -i wsgi/application
 sed -e "s|tg2app|$proj|g" -i wsgi/tg2app/openshift.ini
 
